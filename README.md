@@ -9,7 +9,7 @@ This model structure allows us to take into account individuals protection statu
 
 The repository contains code used to generate the results and figures for the submited publication:  
 
-**Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination **
+**Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination**
 
 *Hayley A Thompson1*, *Alexandra B Hogan1, Patrick G T Walker1, Michael T White2, Aubrey J Cunnington3 Christian F Ockenhouse4, Azra C Ghani1* 
 
