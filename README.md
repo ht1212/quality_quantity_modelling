@@ -15,6 +15,7 @@ The repository contains code used to generate the results and figures for the su
 
 1 MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial College London, London, UK. 2 Malaria: Parasites and Hosts, Department of Parasites and Insect Vectors, Institut Pasteur, Paris, France. 3.  Section of Paediatrics, Imperial College London, London, UK. 4 PATH Malaria Vaccine Initiative, Washington, DC USA. 
 
+## Repo Contents 
 1. 
 2. mcmc model fitting proecdure  
 3. model comparisons  
@@ -24,8 +25,6 @@ The repository contains code used to generate the results and figures for the su
 7. Figure 4
 8. Figure 5
 9. Figure 6 
-
-## Repo Contents 
 
 ## System Requirements  
 
