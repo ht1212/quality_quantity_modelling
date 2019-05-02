@@ -4,7 +4,7 @@
 #======================================================================================
 ## 1. plotting trial data  
 
-# creating survival objects  
+## creating survival objects  
 
 status <- infect  
 time <- T  
@@ -18,6 +18,8 @@ df_observed <- data.frame(status, time, trt)
 ## Antibody titre and avidity model predictions ##
 
 # model predicted survival object  
+
+#  fixed parameters
 mult <- 3.8
 pfT <- 50000000
 t_L <- 6.5
