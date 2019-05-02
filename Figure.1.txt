@@ -35,7 +35,9 @@ p2 + scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) +
    stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, position=position_dodge(width=0.8)) +
   theme_minimal()
 
-##
+##======================================================================
+## Statistical tests
+
 ## Testing for normality of the data  
 ## 1. Density Plots  
  ggdensity(nanp, 
@@ -50,7 +52,7 @@ p2 + scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) +
 shapiro.test(bp$nanp)
 # p.value 0.00903 = not significantly different from normal dist 
 
-####sharpiro-wilk normality test for avidity 
+### sharpiro-wilk normality test for avidity 
 shapiro.test(bp$avidity)
 # p.value 0.4198 = data not normally distributed 
 
