@@ -14,22 +14,17 @@ The repository contains code used to generate the results and figures for the su
 
 1 MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial College London, London, UK. 2 Malaria: Parasites and Hosts, Department of Parasites and Insect Vectors, Institut Pasteur, Paris, France. 3.  Section of Paediatrics, Imperial College London, London, UK. 4 PATH Malaria Vaccine Initiative, Washington, DC USA. 
 
-Code is grouped according to the results subsections of the paper
-
 ## Repo Contents 
-1. 
-2. mcmc model fitting proecdure  
-3. model comparisons  
-4. Predicted Vaccine Efficacy  
-5. Figure 1  
-6. Figure 2  
-7. Figure 4
-8. Figure 5
-9. Figure 6 
+The R code presented is grouped according to the results subsections of the paper.  
+1. Data and packages
+2. R1_immunogenicity_data 
+3. R2_model_fitting
+4. R3_efficacy_as_function_immune_response
 
 ## System Requirements  
+Perfomring this analysis requires only a standard computer with enough RAM to support running the code through R. This code has only been tested on Windows systems. 
 
 ### Software Requirements  
-
+All 
 
 ## Imstallation Guide and Instructions for Use 
