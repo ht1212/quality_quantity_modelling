@@ -1,5 +1,6 @@
 ########################################################################################################
-# Code to Reproduce Figure.1 And associated information
+# Code to Reproduce the Results from the section: Immunogenicity Data 
+# Within this section we re-summarise the immunological data we have been provided 
 # 
 
 #=======================================================================================================
