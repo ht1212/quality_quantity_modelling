@@ -1,0 +1,117 @@
+##########################################################################################################
+## TABULATING BEST FIT PARAMETERS  
+## Data For Paper Table.1 and Supplementary Information Table 1 
+## From all model runs display the median parameter values and their ranking based on the DIC criteria 
+##
+###########################################################################################################
+
+### create object to store data ###
+spz_fit <- matrix(NA, nrow=10, ncol=12)
+
+colnames(spz_fit) <- c("n", "sig_n", "sig_mu", "b_nanp", "a_nanp", 
+                        "b_av", "a_av", "gamma", "ML", "DIC", "dDIC" , "VE")  
+
+rownames(spz_fit) <- c("exp exp", "exp hill", "hill hill", "hill exp", "interaction" , "ab exp" 
+                        , "ab hil" , "av exp" , "av hill" , "base" )
+
+### median parameter values from each model ###
+
+spz_fit[1,1] <- median(MCMC_burn[,1])
+spz_fit[1,2] <- median(MCMC_burn[,2])
+spz_fit[1,3] <- median(MCMC_burn[,3])
+spz_fit[1,4] <- median(MCMC_burn[,4])
+spz_fit[1,6] <- median(MCMC_burn[,5])
+spz_fit[1,9]           <- -median(MCMC_burn[,6])
+spz_fit[1,10]           <- DIC_M2
+
+
+spz_fit[2,1] <- median(MCMC_burn_M3[,1])
+spz_fit[2,2] <- median(MCMC_burn_M3[,2])
+spz_fit[2,3] <- median(MCMC_burn_M3[,3])
+spz_fit[2,4] <- median(MCMC_burn_M3[,4])
+spz_fit[2,5] <- median(MCMC_burn_M3[,5])
+spz_fit[2,6] <- median(MCMC_burn_M3[,6])
+spz_fit[2,9]           <- -median(MCMC_burn[,7])
+spz_fit[2,10]           <- DIC_M3
+
+
+spz_fit[3,c(1,2,3,4,5,6,7)] <- median(MCMC_burn_M4[,1:7])
+spz_fit[3,1] <- median(MCMC_burn_M4[,1])
+spz_fit[3,2] <- median(MCMC_burn_M4[,2])
+spz_fit[3,3] <- median(MCMC_burn_M4[,3])
+spz_fit[3,4] <- median(MCMC_burn_M4[,4])
+spz_fit[3,5] <- median(MCMC_burn_M4[,5])
+spz_fit[3,6] <- median(MCMC_burn_M4[,6])
+spz_fit[3,7] <- median(MCMC_burn_M4[,7])
+spz_fit[3,9]             <-   -median(MCMC_burn_M4[,8])
+spz_fit[3,10]           <-     DIC_M4
+
+spz_fit[4,c(1,2,3,4,5,6)] <- median(MCMC_burn_M5[,1:6])
+spz_fit[4,1] <- median(MCMC_burn_M5[,1])
+spz_fit[4,2] <- median(MCMC_burn_M5[,2])
+spz_fit[4,3] <- median(MCMC_burn_M5[,3])
+spz_fit[4,4] <- median(MCMC_burn_M5[,4])
+spz_fit[4,5] <- median(MCMC_burn_M5[,5])
+spz_fit[4,6] <- median(MCMC_burn_M5[,6])
+spz_fit[4,9]             <-   -median(MCMC_burn_M5[,7])
+spz_fit[4,10]           <-     DIC_M5
+
+spz_fit[5,c(1,2,3,4,6,8)] <- median(MCMC_burn_M6[,1:6])
+spz_fit[5,1] <- median(MCMC_burn_M6[,1])
+spz_fit[5,2] <- median(MCMC_burn_M6[,2])
+spz_fit[5,3] <- median(MCMC_burn_M6[,3])
+spz_fit[5,4] <- median(MCMC_burn_M6[,4])
+spz_fit[5,6] <- median(MCMC_burn_M6[,5])
+spz_fit[5,8] <- median(MCMC_burn_M6[,6])
+spz_fit[5,9]             <-   -median(MCMC_burn_M6[,7])
+spz_fit[5,10]           <-     DIC_M6
+
+spz_fit[6,c(1,2,3,4)] <- median(MCMC_burn_M7[,1:4])
+spz_fit[6,1] <- median(MCMC_burn_M7[,1])
+spz_fit[6,2] <- median(MCMC_burn_M7[,2])
+spz_fit[6,3] <- median(MCMC_burn_M7[,3])
+spz_fit[6,4] <- median(MCMC_burn_M7[,4])
+spz_fit[6,9]             <-   -median(MCMC_burn_M7[,5])
+spz_fit[6,10]           <-     DIC_M7
+
+
+spz_fit[7,c(1,2,3,4,5)] <- median(MCMC_burn_M8[,1:5])
+spz_fit[7,1] <- median(MCMC_burn_M8[,1])
+spz_fit[7,2] <- median(MCMC_burn_M8[,2])
+spz_fit[7,3] <- median(MCMC_burn_M8[,3])
+spz_fit[7,4] <- median(MCMC_burn_M8[,4])
+spz_fit[7,5] <- median(MCMC_burn_M8[,5])
+spz_fit[7,9]             <-   -median(MCMC_burn_M8[,6])
+spz_fit[7,10]           <-     DIC_M8
+
+spz_fit[8,c(1,2,3,6)] <- median(MCMC_burn_M9[,1:4])
+spz_fit[8,1] <- median(MCMC_burn_M9[,1])
+spz_fit[8,2] <- median(MCMC_burn_M9[,2])
+spz_fit[8,3] <- median(MCMC_burn_M9[,3])
+spz_fit[8,6] <- median(MCMC_burn_M9[,4])
+
+spz_fit[8,9]             <-   -median(MCMC_burn_M9[,5])
+spz_fit[8,10]           <-     DIC_M9
+
+spz_fit[9,c(1,2,3,6,7)] <- median(MCMC_burn_M10[,1:5])
+spz_fit[9,1] <- median(MCMC_burn_M10[,1])
+spz_fit[9,2] <- median(MCMC_burn_M10[,2])
+spz_fit[9,3] <- median(MCMC_burn_M10[,3])
+spz_fit[9,6] <- median(MCMC_burn_M10[,4])
+spz_fit[9,7] <- median(MCMC_burn_M10[,5])
+spz_fit[9,9]             <-   -median(MCMC_burn_M10[,6])
+spz_fit[9,10]           <-     DIC_M10
+
+
+spz_fit[10,1] <- median(MCMC_burn_M11[,1])
+spz_fit[10,2] <- median(MCMC_burn_M11[,2])
+spz_fit[10,3] <- median(MCMC_burn_M11[,3])
+spz_fit[10,12] <- median(MCMC_burn_M11[,4])
+spz_fit[10,9]             <-   -median(MCMC_burn_M11[,6])
+spz_fit[10,10]           <-     DIC_M11
+
+### Difference in DIC ###
+spz_fit[,11] <- spz_fit[,10] - min(spz_fit[,10])
+
+### order table based on difference in DIC ### 
+spz_fit <- spz_fit[order(spz_fit[,11]),]
