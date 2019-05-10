@@ -1,0 +1,14 @@
+#######################################################################
+# Code to load data into R and create necessary objects for analysis  #
+#######################################################################
+
+MAL71 <- read.csv(MAL71_data.csv) 
+
+### create objects  
+
+nanp    <-  
+avidity <-  
+vaccine <-  
+infect  <-  
+time    <- 
+
