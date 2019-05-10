@@ -1,9 +1,10 @@
-########################################################################################################
+#############################################################################################################
 # Code to Reproduce the Results from the section: Immunogenicity Data 
-# Within this section we re-summarise the immunological data we have been provided 
-# 
+# Within this section we re-summarise the immunological data we have been provided, produce display plots
+# and the associated statistical tests
+# Need to have loaded the data and installed the packages in 1.Data 
+#############################################################################################################
 
-#=======================================================================================================
 ### Immune measurements boxplots  - Paper Figure.1 
 
 bp <- data.frame(vaccine, avidity, infect) 
