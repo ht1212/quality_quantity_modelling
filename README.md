@@ -16,7 +16,7 @@ This repository contains code used to generate the results and figures for the s
 ## Repo Contents 
 The R code presented is grouped according to the results subsections of the paper. 
 1. [Data and packages](Data)
-2. R1_immunogenicity_data 
+2. [Immunogenicity Data](R1_Immunogenicity_Data)
 3. R2_model_fitting
 4. R3_efficacy_as_function_immune_response
 
