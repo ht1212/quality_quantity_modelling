@@ -8,34 +8,43 @@
 ### Immune measurements boxplots  - Paper Figure.1 
 
 bp <- data.frame(vaccine, avidity, infect) 
-bp$infection[which(data$infect=="0")] <- "Protected"
-bp$infection[which(data$infect=="1")] <- "Infected"
+bp$infection[which(bp$infect=="0")] <- "Protected"
+bp$infection[which(bp$infect=="1")] <- "Infected"
 
-bp$vaccine2[which(bp$vaccine=="std")] <- "standard"
-bp$vaccine2[which(bp$vaccine=="fx")] <- "delayed-fractional"
+bp$vaccine2[which(bp$vaccine=="std")] <- "Standard"
+bp$vaccine2[which(bp$vaccine=="fx")] <- "Delayed-Fractional"
 
 bp$titre <- nanp 
 
 #### avidity plot  ####
-p <- ggplot(data, aes(x=vaccine2, y=avidity, fill=infection)) + 
+p <- ggplot(bp, aes(x=vaccine2, y=avidity, fill=infection)) + 
   geom_boxplot(outlier.colour="black", outlier.shape=20,
-               outlier.size=4, position=position_dodge(0.8) , lwd=1 )
-
-p + labs(x="Vaccination Schedule", y = "Avidity Index" , fill = "Infection Status") +
+               outlier.size=4, position=position_dodge(0.8) , lwd=1 ) +
+  labs(x=" ", y = "Avidity Index" , fill = "Infection\nStatus") +
   ylim(20,100)  + stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, 
                                position=position_dodge(width=0.8)) + theme_minimal() +
   scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1"))
 
-
+p
 #### titre plot ####
-p2 <- ggplot(data, aes(x=vaccine2, y=antibody, fill=infection)) + 
+p2 <- ggplot(bp, aes(x=vaccine2, y=titre, fill=infection)) + 
   geom_boxplot(outlier.colour="black", outlier.shape=20,
-               outlier.size=4, position=position_dodge(0.8) , lwd=1)
-
-p2 + scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) + 
-    labs(x="Vaccination Schedule", y = "Anti-NANP Antibody Titre" , fill = "Infection\nStatus") +
-   stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, position=position_dodge(width=0.8)) +
+               outlier.size=4, position=position_dodge(0.8) , lwd=1)  + 
+  scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) + 
+  labs(x=" ", y = "Anti-NANP Antibody Titre" , fill = "Infection\nStatus") +
+  stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, position=position_dodge(width=0.8)) +
   theme_minimal()
+
+p2
+
+#### together ##### 
+
+figure_1 <- ggarrange(p, p2 , 
+                      labels = c("A", "B"),
+                      ncol = 1, nrow = 2)
+
+annotate_figure(figure_1,
+                bottom = text_grob("Vaccination Schedule", color = "black"))
 
 ##======================================================================
 ## Statistical tests
@@ -51,7 +60,7 @@ p2 + scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) +
           xlab = "Anti-NANP Avidity Index")
 
 ### sharpiro-Wilk normality test for nanp 
-shapiro.test(bp$nanp)
+shapiro.test(bp$titre)
 # p.value 0.00903 = not significantly different from normal dist 
 
 ### sharpiro-wilk normality test for avidity 
@@ -59,22 +68,22 @@ shapiro.test(bp$avidity)
 # p.value 0.4198 = data not normally distributed 
 
 #### visual inspection of normality  
-ggqqplot(NANP, ylab="anti-NANP titre")
+ggqqplot(nanp, ylab="anti-NANP titre")
 ggqqplot(avidity, ylab="avidity index")
 
 #### correlations between individuals measurements  
-ggscatter(bp, x = "nanp", y = "avidity" ,
+ggscatter(bp, x = "titre", y = "avidity" ,
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "spearman",
           xlab = "anti-NANP antibody titre", ylab = "avidity index")
 
 ### spearman rank correlation co-efficient  
-cor <-cor.test(NANP, avidity,  method = "spearman")
+cor <-cor.test(nanp, avidity,  method = "spearman")
 cor
 
 ##=============================================================================================================
 # Non-parametric statistical tests along with Figure.1 
 # Due to slight non-normality of data 
 
-wilcox.test(NANP_Fx, NANP_STD)
+wilcox.test(nanp_fx, nanp_std)
 wilcox.test(avidity_fx, avidity_std)
