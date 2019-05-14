@@ -14,6 +14,16 @@ vaccine <-  MAL71$vaccine
 infect  <-  MAL71$infect
 time    <-  MAL71_time_to_onset
 
+nanp_std  
+avidity_std  
+infect_std  
+time_std  
+
+nanp_fx <- nanp[which(vaccine=="fx")]
+avidity_fx 
+infect_fx 
+time_fx
+
 ############################################ 
 ## Fixed Values to load into environment  ##
 ############################################
