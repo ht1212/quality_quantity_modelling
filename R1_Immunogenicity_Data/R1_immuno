@@ -1,0 +1,80 @@
+#############################################################################################################
+# Code to Reproduce the Results from the section: Immunogenicity Data 
+# Within this section we re-summarise the immunological data we have been provided, produce display plots
+# and the associated statistical tests
+# Need to have loaded the data and installed the packages in 1.Data 
+#############################################################################################################
+
+### Immune measurements boxplots  - Paper Figure.1 
+
+bp <- data.frame(vaccine, avidity, infect) 
+bp$infection[which(data$infect=="0")] <- "Protected"
+bp$infection[which(data$infect=="1")] <- "Infected"
+
+bp$vaccine2[which(bp$vaccine=="std")] <- "standard"
+bp$vaccine2[which(bp$vaccine=="fx")] <- "delayed-fractional"
+
+bp$titre <- nanp 
+
+#### avidity plot  ####
+p <- ggplot(data, aes(x=vaccine2, y=avidity, fill=infection)) + 
+  geom_boxplot(outlier.colour="black", outlier.shape=20,
+               outlier.size=4, position=position_dodge(0.8) , lwd=1 )
+
+p + labs(x="Vaccination Schedule", y = "Avidity Index" , fill = "Infection Status") +
+  ylim(20,100)  + stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, 
+                               position=position_dodge(width=0.8)) + theme_minimal() +
+  scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1"))
+
+
+#### titre plot ####
+p2 <- ggplot(data, aes(x=vaccine2, y=antibody, fill=infection)) + 
+  geom_boxplot(outlier.colour="black", outlier.shape=20,
+               outlier.size=4, position=position_dodge(0.8) , lwd=1)
+
+p2 + scale_fill_manual(values = wes_palette(n=2, name="GrandBudapest1")) + 
+    labs(x="Vaccination Schedule", y = "Anti-NANP Antibody Titre" , fill = "Infection\nStatus") +
+   stat_summary(fun.y=mean, geom="point", shape=17, size=2.5, position=position_dodge(width=0.8)) +
+  theme_minimal()
+
+##======================================================================
+## Statistical tests
+
+## Testing for normality of the data  
+## 1. Density Plots  
+ ggdensity(nanp, 
+          main = "Density plot of antibody titre",
+          xlab = "Anti-NANP Antibody Titre")
+
+ ggdensity(avidity, 
+          main = "Density plot of avidity index",
+          xlab = "Anti-NANP Avidity Index")
+
+### sharpiro-Wilk normality test for nanp 
+shapiro.test(bp$nanp)
+# p.value 0.00903 = not significantly different from normal dist 
+
+### sharpiro-wilk normality test for avidity 
+shapiro.test(bp$avidity)
+# p.value 0.4198 = data not normally distributed 
+
+#### visual inspection of normality  
+ggqqplot(NANP, ylab="anti-NANP titre")
+ggqqplot(avidity, ylab="avidity index")
+
+#### correlations between individuals measurements  
+ggscatter(bp, x = "nanp", y = "avidity" ,
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "anti-NANP antibody titre", ylab = "avidity index")
+
+### spearman rank correlation co-efficient  
+cor <-cor.test(NANP, avidity,  method = "spearman")
+cor
+
+##=============================================================================================================
+# Non-parametric statistical tests along with Figure.1 
+# Due to slight non-normality of data 
+
+wilcox.test(NANP_Fx, NANP_STD)
+wilcox.test(avidity_fx, avidity_std)
