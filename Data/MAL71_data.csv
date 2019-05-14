@@ -1,4 +1,4 @@
-PID,vaccine,nanp_titre,nanp_avidty,infect,time_to_onset
+PID,vaccine,nanp_titre,nanp_avidity,infect,time_to_onset
 1,fx,5788,0.43642018,0,28
 2,fx,4823,0.477710968,0,28
 3,fx,30831,0.321689209,0,28
