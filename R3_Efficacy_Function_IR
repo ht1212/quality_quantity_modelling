@@ -498,6 +498,24 @@ VE_pred[4,3]  <- 1 - sum(infect[nanp_3])/length(infect[nanp_3])
 VE_pred[4,4]  <- 1 - sum(infect)/length(infect)
 
 
+########################################
+## Histograms of individual level VE  ##
+########################################
+DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
+
+VE_inf <- (r/(n*DR+r))^r
+VE_inf <- 1 - (1-VE_inf)/(1-(1-p)^r)
+
+hist <- data.frame(VE_inf, vaccine)
+
+hist$VE_inf <- hist$VE_inf*100
+
+ggplot(hist, aes(x=VE_inf, fill=vaccine)) + facet_wrap( ~ vaccine ) +
+  geom_histogram(breaks=seq(20, 100, by=10), alpha=0.8, color="navy" ,position="dodge" ) + 
+  scale_x_continuous(name = "Vaccine Efficacy (%)") + 
+  scale_fill_manual(values = c("magenta", "blue"),name="Vaccine\nSchedule" , labels=c("Fx017M", "012M") ) +
+  theme_minimal()
+
 
 ####################################################################################################################################
 ####################################################################################################################################
