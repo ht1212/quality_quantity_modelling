@@ -624,4 +624,246 @@ text(y=2+av_80[1], x=1500, labels="90%")
 ####################################################################################################################################
 ####################################################################################################################################
 
+##########################################################################
+## SECTION 3 
+## VE dose response graphs for each immune measurement  
+###########################################################################
+
+### extract posterior medians and calculate VE for each increasing immune measurement with the other antibody characteristic held constant (have chosen the median value here, can also set at an arbitary value) ###
+
+###===========================================================================================================================
+## 1 VE for each unit increase in anti-nanp antibody titre
+##
+
+## best fitting median parameter values  
+par_median = apply(X=MCMC_burn_M5[,1:7], MARGIN=2, FUN=median)
+
+## nanp_sequence  
+nanp_seq = exp( seq(from=log(1), to=log(1.5*max(NANP)), length=200) )
+
+############################
+## VE efficacy model to calculate  
+model_VE <- function(nanp, avidity, par_M5){
+  n          <- par_M5[1]
+  sig_n      <- par_M5[2]
+  sig_mu     <- par_M5[3]
+  b_nanp     <- par_M5[4]
+  a_nanp     <- par_M5[5]
+  b_av       <- par_M5[6]
+  
+  ############################
+  ## Secondary NB parameters
+  
+  p = (sig_n^2-n)/(sig_n^2)
+  r = (n^2)/(sig_n^2-n)
+
+  #############################
+  ## Dose response
+  
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
+  
+  #####################################
+  ## Vaccine Efficacy Against Infection 
+  
+  VE_inf <- (r/(n*DR+r))^r
+  VE_inf <-  1 - (1-VE_inf)/(1-(1-p)^r)
+  VE_inf <- mean( VE_inf )
+  
+  VE_inf
+    
+}
+
+model_VE = cmpfun(model_VE, options=list(optimize=3))
+
+## prediction ##
+median_av <- median(avidity) 
+
+M5_par_median_pred = sapply(nanp_seq, model_VE, avidity=median_av, par=par_median)
+
+### posterior prediction intervals ###
+N_sam = 100000
+sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
+
+M2_sam_cs = matrix(NA, nrow=N_sam, ncol=length(nanp_seq))
+
+for(k in 1:N_sam){
+  M2_sam_cs[k,] = sapply(nanp_seq, model_VE, avidity=median_av, par=MCMC_burn_M5[sam_seq[k],1:6])
+}
+
+
+M2_quant_cs = matrix(NA, nrow=3, ncol=length(nanp_seq))
+
+for(j in 1:length(nanp_seq)){
+  M2_quant_cs[,j] = quantile( M2_sam_cs[,j], prob=c(0.025, 0.5, 0.975) )
+}
+
+###############################
+## Plotting 
+
+## construct a histogram out of polygons ##
+bars <- 10
+
+breaks <- exp( seq( from=log(min(0.99*NANP)), to=log(max(NANP)), length=bars+1) )
+
+counts <- rep(0, bars)
+
+for(i in 1:length(NANP)){
+  for(j in 1:bars){
+    
+    if( (NANP[i]>breaks[j]) && (NANP[i]<=breaks[j+1]) ){
+      counts[j] <- counts[j] + 1 
+    }
+  }
+}
+
+counts <- 0.9*counts/max(counts)
+
+### plot ###
+### plots next to each other ### 
+
+par(mfrow=c(1,2))
+
+plot(x=nanp_seq, y=M2_quant_cs[2,], type='l', log="x",
+     ylim=c(0,1.05), xlim=c(1000, max(nanp_seq)), yaxt = "n", xaxt='n',
+     xlab=expression(paste( "Anti-NANP Antibody Titre ")),
+     ylab="Vaccine Efficacy (%)", las=1)
+axis(1, at=c(1000,  10000,  100000), label=c("1,000", "10,000", "100,000")) 
+axis(2, at=c(0.0, 0.2, 0.4, 0.6, 0.8, 1.0), label=c(0, 20, 40, 60,80,100), las=1)
+
+for(j in 1:bars){
+  polygon(x=c(breaks[j:(j+1)], rev(breaks[j:(j+1)]) ),
+          y=c(0, 0, rep(counts[j], 2) ),
+          col=rgb(190/256,190/256,190/256,0.4) )
+}
+
+polygon(x=c(nanp_seq, rev(nanp_seq)), 
+        y=c( M2_quant_cs[1,], rev(M2_quant_cs[3,]) ),
+        col=rgb(255/256,165/256,0/256,0.4), border=NA)
+
+points(x=nanp_seq, y=M2_quant_cs[2,], 
+       type='l', lwd=3, col="darkorange")
+
+legend(x="topleft", 
+       legend = c("efficacy against infection" ), 
+       col = c("darkorange"),
+       lwd = 3,  bty='n', lty=c(1,1) )
+
+
+##=====================================================================================================================
+## 2 VE for each unit increase in Avidity with titre held constant 
+
+#############################################
+## Extract posterior medians and calculate model prediction
+
+avidity_seq = avidity_seq <- seq(from=0, to=100, length=200)
+
+############################
+## VE calculation 
+model_VE <- function(nanp, avidity, par_M5){
+  n          <- par_M5[1]
+  sig_n      <- par_M5[2]
+  sig_mu     <- par_M5[3]
+  b_nanp     <- par_M5[4]
+  a_nanp     <- par_M5[5]
+  b_av       <- par_M5[6]
+  
+  
+  ############################
+  ## Secondary NB parameters
+  
+  p = (sig_n^2-n)/(sig_n^2)
+  r = (n^2)/(sig_n^2-n)
+  
+  
+  #############################
+  ## Dose response
+  
+  DR <-  exp( -log(2)*(avidity/b_av) ) #( 1/(1+(nanp/b_nanp)^a_nanp) )
+  
+  #############################
+  ## VE against infection 
+  VE_inf <- (r/(n*DR+r))^r
+  VE_inf <-  1 - (1-VE_inf)/(1-(1-p)^r)
+  VE_inf <- mean( VE_inf )
+  
+  VE_inf
+    
+}
+
+model_VE = cmpfun(model_VE, options=list(optimize=3))
+
+M5_par_median_pred_av = sapply(avidity_seq, model_VE, nanp=median_nanp, par=par_median)
+
+#############################################
+## Posterior prediction intervals 
+
+median_nanp <- median(nanp) 
+
+N_sam = 10000
+sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
+
+M2_sam_av = matrix(NA, nrow=N_sam, ncol=length(avidity_seq))
+
+for(k in 1:N_sam){
+  M2_sam_av[k,] = sapply(avidity_seq, model_VE, nanp=median_nanp, par=MCMC_burn_M5[sam_seq[k],1:6])
+}
+
+M2_quant_av = matrix(NA, nrow=3, ncol=length(avidity_seq))
+
+for(j in 1:length(avidity_seq)){
+  M2_quant_av[,j] = quantile( M2_sam_av[,j], prob=c(0.025, 0.5, 0.975) )
+}
+
+########################################################
+## Construct a histogram out of polygons
+
+bars <- 10
+
+breaks <- exp( seq( from=log(min(0.99*avidity)), to=log(max(avidity)), length=bars+1) )
+
+counts <- rep(0, bars)
+
+for(i in 1:length(avidity)){
+  for(j in 1:bars){
+    
+    if( (avidity[i]>breaks[j]) && (avidity[i]<=breaks[j+1]) ){
+      counts[j] <- counts[j] + 1 
+    }
+  }
+}
+
+counts <- 0.9*counts/max(counts)
+
+
+#########################################################
+## plot infection blocking efficacy 
+
+plot(x=avidity_seq, y=M2_quant_av[2,], type='l',  
+     ylim=c(0,1.05), xlim=c(1, max(avidity_seq)), yaxt='n', xaxt='n',
+     xlab=expression(paste( "Anti-NANP Avidity Index")),
+     ylab="Vaccine Efficacy (%)") 
+
+axis(1, at=c(1,20,50,70,100), label=c(1,20,50,70,100)) #cex.axis=axis.size)
+axis(2, at=c(0.0,0.2, 0.4, 0.6, 0.8, 1.0), label=c(0, 20, 40, 60, 80, 100), las=1)
+
+for(j in 1:bars){
+  polygon(x=c(breaks[j:(j+1)], rev(breaks[j:(j+1)]) ),
+          y=c(0, 0, rep(counts[j], 2) ),
+          col=rgb(190/256,190/256,190/256,0.4) )
+}		
+
+points(x=avidity_seq, y=M2_quant_av[2,], 
+       type='l', lwd=3, col="darkorange") 
+
+polygon(x=c(avidity_seq, rev(avidity_seq)), 
+        y=c( M2_quant_av[1,], rev(M2_quant_av[3,]) ),
+        col=rgb(255/256,165/256,0/256,0.4), border=NA)
+
+legend(x="topleft", 
+       legend = c("efficacy against infection" ), 
+       col = c("darkorange"),
+       lwd = 3,  bty='n', lty=c(1,1) )
+       
+       
+	
 
