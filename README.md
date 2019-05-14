@@ -17,8 +17,8 @@ This repository contains code used to generate the results and figures for the s
 The R code presented is grouped according to the results subsections of the paper. 
 1. [Data and packages](Data)
 2. [Immunogenicity Data](R1_Immunogenicity_Data)
-3. R2_model_fitting
-4. R3_efficacy_as_function_immune_response
+3. [Model Fitting](#r2_Model_Fitting
+4. [Model Predicted Vaccine Efficacy as a Function of the Immune Response](R3_Efficacy_Function_IR)
 
 ## System Requirements  
 Perfomring this analysis requires only a standard computer with enough RAM to support running the code through R. This code has only been tested on Windows systems. 
