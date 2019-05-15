@@ -63,6 +63,10 @@ Time_inf <- time[which(infect==1)]
 
 Time_infect <- rep(NA[1:10])
 
+p_nb <- (sig_n^2-n)/(sig_n^2)
+r_nb <- (n^2)/(sig_n^2-n)
+
+
 for (i in 1:length(Time_infect)) {
   n_DR <- n * (( 1/(1+(nanp_infect[i]/b_nanp)^a_nanp)) * exp(-log(2)*avidity_infect[i]/b_av))
   n_DR <- max(n_DR, 1e-5)
@@ -78,7 +82,7 @@ for (i in 1:length(Time_infect)) {
   
   mero <- rgamma(length(SPZ), scale=theta, shape=SPZ*k )
   
-  TT <- t_L - log( mero/PfT )/log(mult)
+  TT <- t_L - log( mero/pfT )/log(mult)
   
   Time_infect[i] <- quantile(TT, prob=c(0.5))
   
@@ -150,7 +154,7 @@ for (i in 1:length(Time_infect_ab)) {
   
   mero_ab <- rgamma(length(SPZ_ab), scale=theta_ab, shape=SPZ_ab*k_ab )
   
-  TT_ab <- t_L - log( mero_ab/PfT )/log(mult)
+  TT_ab <- t_L - log( mero_ab/pfT )/log(mult)
   
   Time_infect_ab[i] <- quantile(TT_ab, prob=c(0.5))
   
@@ -188,6 +192,18 @@ p2 <- ggsurvplot(fit_ab,  combine = TRUE,     # Combine curves
 
 p2 
 
+###########################
+## Mulitplot Comparison  ##
+###########################
+
+ggsurvlist <- list(
+  x = p1,
+  y = p2
+)
+
+# Arrange multiple ggsurvplots and print the output
+arrange_ggsurvplots(ggsurvlist, print = TRUE, ncol = 1, nrow = 2)
+
 ########################################################################################################################################
 ########################################################################################################################################
 ########################################################################################################################################
@@ -217,6 +233,40 @@ VE_inf <- 1 - (1-VE_inf)/(1-(1-p)^r)
 ## Hosmer-Lemeshow to bin into 5 groups based on predicted eff 
 hl.results_M5 <- hoslem.test(protected, VE_inf, g=5 ) 
 hl.results_M5
+
+# model for predicted efficacy 
+model_VE <- function(nanp, avidity, par_M5){
+  n          <- par_M5[1]
+  sig_n      <- par_M5[2]
+  sig_mu     <- par_M5[3]
+  b_nanp     <- par_M5[4]
+  a_nanp     <- par_M5[5]
+  b_av       <- par_M5[6]
+  
+  
+  ############################
+  ## Secondary NB parameters
+  
+  p = (sig_n^2-n)/(sig_n^2)
+  r = (n^2)/(sig_n^2-n)
+  
+  
+  #############################
+  ## Dose response
+  
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
+  
+  VE_inf <- (r/(n*DR+r))^r
+  VE_inf <-  1 - (1-VE_inf)/(1-(1-p)^r)
+  VE_inf <- mean(VE_inf)
+  
+  VE_inf
+  
+  
+}
+
+model_VE = cmpfun(model_VE, options=list(optimize=3))
+
 
 ## Overall efficacy predicted for fractional and stanard arms based on immune responses 
 ## Fractional 
@@ -266,21 +316,21 @@ data.1_M5$estimate <- median(M5_quant_std[2,])
 data.1_M5$lower <- median(M5_quant_std[1,])
 data.1_M5$higher <- median(M5_quant_std[3,])
 
-data.2_M5 <- data.frame(observed_VE_Fx)
+data.2_M5 <- data.frame(observed_VE_fx)
 data.2_M5$estimate <- median(M5_quant_fx[2,])
 data.2_M5$lower <- median(M5_quant_fx[1,])
 data.2_M5$higher <- median(M5_quant_fx[3,])
 
 ab_av_plot <- ggplot() + geom_pointrange( aes(x=predicted_ve, y=observed_ve, ymin=observed.rate.lower,ymax=observed.rate.upper ),
-                            plot.data_M5, colour = "grey48" ) + 
+                                          plot.data_M5, colour = "black" , size=0.6) + 
   geom_abline(intercept=0, slope=1, linetype='dashed', size=0.7) + 
   coord_cartesian(xlim=c(0.2, 1 ), ylim=c( 0.2, 1))  + 
   labs(x=' ', y='', fill=NULL) + 
   scale_fill_grey(start=0, end=1) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                                           panel.background = element_blank(), axis.line = element_line(colour = "black"), 
                                           axis.text = element_text(colour = "black", size=rel(1.05))) +
-  geom_pointrange( aes(y=observed_VE_std, x=estimate, ymin = 0.295, ymax = 0.801), data.1_M5,  colour = "royalblue1") +
-  geom_pointrange( aes(y=observed_VE_Fx, x=estimate, ymin=0.668, ymax=0.946),  data.2_M5,  colour ="orchid1") 
+  geom_pointrange( aes(y=observed_VE_std, x=estimate, ymin = 0.295, ymax = 0.801), data.1_M5,  colour = "blue", size=0.7) +
+  geom_pointrange( aes(y=observed_VE_fx, x=estimate, ymin=0.668, ymax=0.946),  data.2_M5,  colour ="magenta", size=0.7) 
 
 ab_av_plot
 
@@ -384,7 +434,7 @@ data.p$estimate <- median(M8_quant_stdab[2,])
 data.p$lower <- median(M8_quant_stdab[1,])
 data.p$higher <- median(M8_quant_stdab[3,])
 
-data.w <- data.frame(observed_VE_Fx)
+data.w <- data.frame(observed_VE_fx)
 data.w$estimate <- median(M8_quant_fxab[2,])
 data.w$lower <- median(M8_quant_fxab[1,])
 data.w$higher <- median(M8_quant_fxab[3,])
@@ -399,7 +449,7 @@ ab_plot <- ggplot() + geom_pointrange( aes(x=predicted_ve, y=observed_ve, ymin=o
                                           panel.background = element_blank(), axis.line = element_line(colour = "black"), 
                                           axis.text = element_text(colour = "black", size=rel(1.05))) +
   geom_pointrange( aes(y=observed_VE_std, x=estimate, ymin = 0.294, ymax = 0.801), data.p,  colour = "blue", size=0.7) +
-  geom_pointrange( aes(y=observed_VE_Fx, x=estimate, ymin=0.668, ymax=0.946),  data.w,  colour ="magenta", size=0.7) 
+  geom_pointrange( aes(y=observed_VE_fx, x=estimate, ymin=0.668, ymax=0.946),  data.w,  colour ="magenta", size=0.7) 
 
 ab_plot
 
