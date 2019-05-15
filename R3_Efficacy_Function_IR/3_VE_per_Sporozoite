@@ -1,7 +1,15 @@
-#########################################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. The model code used here was kindly developed from Michael White's
+## previous work on this. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
+
 ## Code to recreate the results from the section: Vaccine Efficacy Per Sporozoite  
 ## Per parasite efficacy is estimating the proportional reduction in the number of parasites emerging from the liver
-#########################################################################################################################
 
 ### per parasite efficacy model 
 
