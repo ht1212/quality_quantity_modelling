@@ -30,15 +30,14 @@ R can be downloaded for free, the latest version R-3.6.0 is avaliable to downloa
 
 Users should install the following packages prior to running any analysis, packages can be installed from the R terminal as follows: 
 
-```install.packages(c('ggplot2' , 'ggpubr' , 'fields' , ')) ```
+```install.packages(c('ggplot2', 'wesanderson', 'ggpubr', 'compiler', 'MASS', 'binom', 'survival', 'survminer', 'ResourceSelection', 'RColorBrewer', 'fields' , 'NumDeriv' )) ```
 
 ## Imstallation Guide and Instructions for Use 
-To perform this analysis, first load the required packages and the necessary pakages into your R console.  
-Then Follow through the sections of code from R1-R3 
+To perform this analysis, first load the required packages into your R console using the code or RStudio Packages search tool.  
 
-The following instructions require that all packages required have been installed within R and that additionally, the JAGS software has also been installed. For more information about how and where to download these, see above in the Software Requirements section. To replicate and reproduce the analyses presented in this paper, do the following:
+To replicate and reproduce the analyses presented in this paper, do the following:
 
-Download Submicroscopic_Review_Data_R_Import.csv from the Data folder of this repository.
-Download the R code from Figure_Generation_Code for the particular part of the analysis you are trying to reproduce.
+Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_pocessing.txt) to load into your environment. 
+Download the R code and follow through the sections for the particular part of the analysis you are trying to reproduce.
 From an R session, import Submicroscopic_Review_Data_R_Import.csv as the object Submicroscopic_Review_Data_R_Import.
 Run the R code. The output from running this code will be a number of MCMC objects, as well as a series of plots representing the output from MCMC based fitting of the logit-linear model to the collated data. These plots form the basis of the figures presented in the publication.
