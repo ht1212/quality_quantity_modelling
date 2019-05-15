@@ -36,6 +36,8 @@ Users should install the following R packages prior to running any analysis, pac
 
 ```install.packages(c('ggplot2', 'wesanderson', 'ggpubr', 'compiler', 'MASS', 'binom', 'survival', 'survminer', 'ResourceSelection', 'RColorBrewer', 'fields' , 'NumDeriv' )) ```
 
+Install time of R should take no longer than a few minutes along with package installation. 
+
 ## Imstallation Guide and Instructions for Use 
 To perform this analysis, first load the required packages into your R console using the code or RStudio Packages search tool.  
 
@@ -44,3 +46,6 @@ To replicate and reproduce the analyses presented in this paper, do the followin
 Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_processing) to load into your environment. 
 
 Then follow through the remaning sections in the repo folders to reporoduce the results as they appear in order in the Results section of the paper. The output of running the code will be a number of MCMC objects, as well as a series of plots represeting the output from both running the models and using the model parameter distributions to produce predictive results. These plots form the basis of the plots presented in the paper. 
+
+Note: The MCMC Code runs may take some 30 minutes to an hour depedning on computer performance. 
+
