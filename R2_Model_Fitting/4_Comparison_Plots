@@ -1,17 +1,18 @@
-########################################################################################################################################
-## Visualising Sporozoite Infection Model Comparisons  
-## The best fitting model parameters are used here to calculate vaccine efficacy as a funciton of individual's immune responses 
-## and predicted time to onset of infection given immune measurements. 
-## 
-## The best fitting parameters are listed in commented code for reference.
-#########################################################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
 
-#  n          <- 141.987
-#  sig_n      <- 169.619
-#  sig_mu     <- 71035.64
-#  b_nanp     <- 4782.802
-#  a_nanp     <-  1.256
-#  b_av       <-  8.067 
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
+
+## MCMC Model Comparisons for results section Model Fitting. 
+
+## Visualising Sporozoite Infection Model Comparisons  
+## The M5 model parameters are used here to calculate vaccine efficacy as a funciton of individual's immune responses 
+## and predicted time to onset of infection given immune measurements. Comparisons are made between models which took into account 
+## both antibody titre and antibody avidity and that which only used titre to predict efficacy. 
 
 ################
 ## Parameters ##
