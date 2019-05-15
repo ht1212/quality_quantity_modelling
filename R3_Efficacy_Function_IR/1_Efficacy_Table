@@ -1,9 +1,17 @@
-####################################################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. The model code used here was kindly developed from Michael White's
+## previous work on this. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
+
 ## Code to generate the results from the section: Model Predicted Vaccine Efficacy as a Function of the Antibody Response  
 ## Section 1: Recreates Table.3 and the Efficacy Distributions 
 ## Section 2: Recreates Figure.5 - heatmap of predicted VE  
 ## Section 3: Recreates Figure.6 - VE dose-response 
-####################################################################################################################################
 
 ################################
 ##        SECTION 1           ##
@@ -113,16 +121,28 @@ colnames(count) <- c("nanp_1", "nanp_2", "nanp_3")
 rownames(count) <- c("avidity_1", "avidity_2", "avidity_3")
 
 ### identifiers ###
+# All avidity low 
+# titre low
 C_11 <- intersect( avidity_1, nanp_1 )
+# titre medium 
 C_12 <- intersect( avidity_1, nanp_2 )
+# titre high 
 C_13 <- intersect( avidity_1, nanp_3 )
 
+# All avidity medium 
+# titre low
 C_21 <- intersect( avidity_2, nanp_1 )
+# titre medium 
 C_22 <- intersect( avidity_2, nanp_2 )
+# titre high 
 C_23 <- intersect( avidity_2, nanp_3 )
 
+# All avidity High 
+# titre low 
 C_31 <- intersect( avidity_3, nanp_1 )
+# titre medium 
 C_32 <- intersect( avidity_3, nanp_2 )
+# titre high 
 C_33 <- intersect( avidity_3, nanp_3 )
 
 ### counts ###
@@ -165,7 +185,7 @@ VE_obs[4,4]  <- 1 - sum(infect)/length(infect)
 #### Predicted VE #####
 
 ######################################
-#### C_11 
+#### C_11 avidity low titre low
 N_sam = 20000
 
 sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
@@ -188,7 +208,7 @@ mean(M2_quant_ll[2,])
 mean(M2_quant_ll[3,])
 
 #####################################
-#### C_12
+#### C_12 aidity low titre medium 
 M2_sam_12 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_12]))
 
 for(k in 1:N_sam){
@@ -208,7 +228,7 @@ mean(M2_quant_12[3,])
 
 
 #####################################
-#### C_13 
+#### C_13 avidity low titre high
 
 M2_sam_13 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_13]))
 
@@ -229,7 +249,7 @@ mean(M2_quant_13[3,])
 
 
 ####################################
-## C_21
+## C_21 avidity medium titre low 
 
 M2_sam_21 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_21]))
 
@@ -249,7 +269,7 @@ mean(M2_quant_21[2,])
 mean(M2_quant_21[3,])
 
 #####################################
-## C_22
+## C_22 avidity medium titre medium 
 
 M2_sam_22 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_22]))
 
@@ -269,7 +289,7 @@ mean(M2_quant_22[2,])
 mean(M2_quant_22[3,])
 
 #####################################
-## C_23
+## C_23 avidity medium titre high  
 
 M2_sam_23 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_23]))
 
@@ -289,7 +309,7 @@ mean(M2_quant_23[2,])
 mean(M2_quant_23[3,])
 
 #######################################
-## C_31
+## C_31 avidity high titre low 
 
 M2_sam_31 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_31]))
 
@@ -310,7 +330,7 @@ mean(M2_quant_31[3,])
 
 
 ########################################
-## C_32
+## C_32 avidity high titre medium 
 
 M2_sam_32 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_32]))
 
@@ -330,7 +350,7 @@ mean(M2_quant_32[2,])
 mean(M2_quant_32[3,])
 
 ###########################################
-## C_33
+## C_33 avidity high titre high 
 
 M2_sam_33 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_33]))
 
@@ -350,7 +370,7 @@ mean(M2_quant_33[2,])
 mean(M2_quant_33[3,])
 
 ########################################
-## 14
+## 14 low avidity across all titres 
 
 M2_sam_14 = matrix(NA, nrow=N_sam, ncol=length(avidity_1))
 
@@ -370,7 +390,7 @@ mean(M2_quant_14[2,])
 mean(M2_quant_14[3,])
 
 ########################################
-## 24
+## 24 avidity medium acorss all titres 
 
 M2_sam_24 = matrix(NA, nrow=N_sam, ncol=length(avidity_2))
 
@@ -390,7 +410,7 @@ mean(M2_quant_24[2,])
 mean(M2_quant_24[3,])
 
 ########################################
-## 34
+## 34 avidity high across all titres 
 
 M2_sam_34 = matrix(NA, nrow=N_sam, ncol=length(avidity_3))
 
@@ -410,7 +430,7 @@ mean(M2_quant_34[2,])
 mean(M2_quant_34[3,])
 
 ########################################
-## 41
+## 41 titre low across all avidities 
 
 M2_sam_41 = matrix(NA, nrow=N_sam, ncol=length(nanp_1))
 
@@ -430,7 +450,7 @@ mean(M2_quant_41[2,])
 mean(M2_quant_41[3,])
 
 ########################################
-## 42
+## 42 titre medium across all avidities 
 
 M2_sam_42 = matrix(NA, nrow=N_sam, ncol=length(nanp_2))
 
@@ -450,7 +470,7 @@ mean(M2_quant_42[2,])
 mean(M2_quant_42[3,])
 
 ########################################
-## 43
+## 43 titre high across all titres 
 
 M2_sam_43 = matrix(NA, nrow=N_sam, ncol=length(nanp_3))
 
@@ -495,6 +515,7 @@ VE_pred[4,3]  <- mean(M2_quant_43[2,])
 
 VE_pred[4,4]  <- mean(M2_quant_test[2,])
 
+# view data frame for Table.3 predicted values 
 
 
 ########################################
