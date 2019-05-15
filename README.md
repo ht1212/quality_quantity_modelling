@@ -27,7 +27,7 @@ Users should have R version 3.4.0 or higher, and several packages set up from CR
 
 R can be downloaded for free, the latest version R-3.6.0 is avaliable to download here: https://cran.r-project.org/bin/windows/base/ 
 
-Users should install the following packages prior to running any analysis, packages can be installed from the R terminal as follows: 
+Users should install the following R packages prior to running any analysis, packages can be installed from the R terminal as follows: 
 
 ```install.packages(c('ggplot2', 'wesanderson', 'ggpubr', 'compiler', 'MASS', 'binom', 'survival', 'survminer', 'ResourceSelection', 'RColorBrewer', 'fields' , 'NumDeriv' )) ```
 
