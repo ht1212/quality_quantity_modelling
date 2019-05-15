@@ -72,7 +72,7 @@ model_M2 <- function(par_M2){
   ##############################
   ## Dose response
   
-  DR <- exp( -log(2)*(NANP/b_nanp) )*exp( -log(2)*(avidity/b_av) )
+  DR <- exp( -log(2)*(nanp/b_nanp) )*exp( -log(2)*(avidity/b_av) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -231,7 +231,7 @@ for(mc in 1:N_mcmc){
   if( prior_MCp1 > -0.5*LARGE )
   {
     loglike_MCp1 = loglike_M2_cs( par_MCp1 ) + prior_MCp1 
-        
+    
     log_prob = min( loglike_MCp1-loglike_MC, 0 )           
     
     if( log(runif(1)) < log_prob ) 
@@ -260,7 +260,7 @@ for(mc in 1:N_mcmc){
       cov_MC = cov( MCMC_par[1:(mc-1),1:5] )
     }
   }
-    
+  
   MCMC_par[mc,1:5] = par_MC
   MCMC_par[mc,6]   = loglike_MC
   MCMC_par[mc,7]   = prior_MC
@@ -268,6 +268,7 @@ for(mc in 1:N_mcmc){
 
 
 MCMC_accept = MCMC_accept/N_mcmc
+
 
 #######################################################
 ## Examine posterior distributions  
@@ -330,7 +331,7 @@ model_M3 <- function(par_M3){
   ##############################
   ## Dose response
   
-  DR <- exp( -log(2)*(NANP/b_nanp) )*( 1/(1+(avidity/b_av)^a_av) )
+  DR <- exp( -log(2)*(nanp/b_nanp) )*( 1/(1+(avidity/b_av)^a_av) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -530,7 +531,7 @@ for(mc in 1:N_mcmc){
     }
   }
   
-   
+  
   MCMC_par_M3[mc,1:6] = par_MC3
   MCMC_par_M3[mc,7]   = loglike_MC3
   MCMC_par_M3[mc,8]   = prior_MC3
@@ -541,7 +542,7 @@ MCMC_accept = MCMC_accept/N_mcmc
 #########################################################
 ## Examine MCMC chains and positerior distributions 
 
-par(mfrow=c(2,4))
+par(mfrow=c(2,6))
 MCMC_burn_M3 <- MCMC_par_M3[floor(0.2*nrow(MCMC_par_M3)):(nrow(MCMC_par_M3)-1),]
 
 hist(MCMC_burn_M3[,1], breaks=50, main="n")
@@ -571,7 +572,7 @@ quantile( MCMC_burn_M3[,6], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 #####################################################################################################################################
 ## model_M4 : ab-Hill, av-Hill
 
- 
+
 model_M4 <- function(par_M4){
   n          <- par_M4[1]
   sig_n      <- par_M4[2]
@@ -587,7 +588,7 @@ model_M4 <- function(par_M4){
   p = (sig_n^2-n)/(sig_n^2)
   r = (n^2)/(sig_n^2-n)
   
-
+  
   ############################
   ## Secondary Gamma parameters
   
@@ -596,7 +597,7 @@ model_M4 <- function(par_M4){
   ##############################
   ## Dose response
   
-  DR <- ( 1/(1+(NANP/b_nanp)^a_nanp) )*( 1/(1+(avidity/b_av)^a_av) )
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )*( 1/(1+(avidity/b_av)^a_av) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -715,7 +716,7 @@ prior_M4 = function( par_M4 ){
     prior_a_av = -LARGE
   }
   
- 
+  
   prior = prior_n + prior_sig_n  + prior_sig_mu + prior_b_nanp + prior_a_nanp + prior_b_av + prior_a_av
   
   prior
@@ -882,7 +883,7 @@ model_M5 <- function(par_M5){
   ##############################
   ## Dose response
   
-  DR <- ( 1/(1+(NANP/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -993,7 +994,7 @@ prior_M5 = function( par_M5 ){
     prior_b_av = -LARGE
   }
   
-
+  
   prior = prior_n + prior_sig_n  + prior_sig_mu + prior_b_nanp + prior_a_nanp + prior_b_av 
   
   prior
@@ -1084,7 +1085,7 @@ for(mc in 1:N_mcmc){
       cov_MC = cov( MCMC_par_M5[1:(mc-1),1:6] )
     }
   }
-    
+  
   MCMC_par_M5[mc,1:6] = par_MC5
   MCMC_par_M5[mc,7]   = loglike_MC5
   MCMC_par_M5[mc,8]   = prior_MC5
@@ -1151,8 +1152,8 @@ model_M6 <- function(par_M6){
   ##############################
   ## Dose response
   
-  DR <- exp( -0.5*log(2)*( (NANP/b_nanp+avidity/b_av) +
-                             sqrt( (NANP/b_nanp+avidity/b_av)^2 + 4*gamma*(NANP/b_nanp)*(avidity/b_av) ) ) )
+  DR <- exp( -0.5*log(2)*( (nanp/b_nanp+avidity/b_av) +
+                             sqrt( (nanp/b_nanp+avidity/b_av)^2 + 4*gamma*(nanp/b_nanp)*(avidity/b_av) ) ) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -1234,7 +1235,7 @@ prior_M6 = function( par_M6 ){
   
   ######################################
   ## Gamma prior on b_nanp 
-
+  
   if( b_nanp>1000 && b_nanp<70000 )
   {
     prior_b_nanp = log(dgamma(b_nanp, shape=0.7, rate=0.00005))
@@ -1262,7 +1263,7 @@ prior_M6 = function( par_M6 ){
   }else{
     prior_gamma = -LARGE
   }
-    
+  
   prior = prior_n + prior_sig_n  + prior_sig_mu + prior_b_nanp +  prior_b_av + prior_gamma
   
   prior
@@ -1413,7 +1414,7 @@ model_M7 <- function(par_M7){
   p = (sig_n^2-n)/(sig_n^2)
   r = (n^2)/(sig_n^2-n)
   
-   ############################
+  ############################
   ## Secondary Gamma parameters
   
   theta_g <- sig_mu*sig_mu/mu
@@ -1421,7 +1422,7 @@ model_M7 <- function(par_M7){
   ##############################
   ## Dose response
   
-  DR <- exp( -log(2)*(NANP/b_nanp) )
+  DR <- exp( -log(2)*(nanp/b_nanp) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -1465,8 +1466,8 @@ prior_M7 = function( par_M7 ){
   sig_n      <- par_M7[2]
   sig_mu     <- par_M7[3]
   b_nanp     <- par_M7[4]
-
-######################################
+  
+  ######################################
   ## Gamma prior on n 
   
   if( n>0 && n<500 )
@@ -1656,7 +1657,7 @@ model_M8 <- function(par_M8){
   p = (sig_n^2-n)/(sig_n^2)
   r = (n^2)/(sig_n^2-n)
   
- 
+  
   ############################
   ## Secondary Gamma parameters
   
@@ -1665,7 +1666,7 @@ model_M8 <- function(par_M8){
   ##############################
   ## Dose response
   
-  DR <- ( 1/(1+(NANP/b_nanp)^a_nanp) )
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )
   DR[which(DR<min_DR)] <- min_DR
   p_spz = n*DR/(n*DR + r)
   
@@ -1735,7 +1736,7 @@ prior_M8 = function( par_M8 ){
   
   ######################################
   ## Gamma prior on sig_mu 
-
+  
   if( sig_mu>30000 && sig_mu<106800 )
   {
     prior_sig_mu = log(dgamma(sig_mu, shape=31.35, rate=0.0005))
@@ -1762,7 +1763,7 @@ prior_M8 = function( par_M8 ){
   }else{
     prior_a_nanp = -LARGE
   }
-    
+  
   prior = prior_n + prior_sig_n  + prior_sig_mu + prior_b_nanp + prior_a_nanp
   
   prior
@@ -2098,7 +2099,7 @@ for(mc in 1:N_mcmc){
       cov_MC = cov( MCMC_par_M9[1:(mc-1),1:4] )
     }
   }
-    
+  
   MCMC_par_M9[mc,1:4] = par_MC9
   MCMC_par_M9[mc,5]   = loglike_MC9
   MCMC_par_M9[mc,6]   = prior_MC9
@@ -2204,8 +2205,8 @@ prior_M10 = function( par_M10 ){
   sig_mu     <- par_M10[3]
   b_av       <- par_M10[4]
   a_av       <- par_M10[5]
-
-
+  
+  
   ######################################
   ## Gamma prior on n 
   
@@ -2361,7 +2362,7 @@ MCMC_accept = MCMC_accept/N_mcmc
 
 #########################################################
 ## Examine MCMC chains and Posterior Distributions
-  
+
 MCMC_burn_M10 <- MCMC_par_M10[floor(0.2*nrow(MCMC_par_M10)):(nrow(MCMC_par_M10)-1),]
 
 par(mfrow=c(2,5))
@@ -2434,7 +2435,7 @@ model_M11 <- function(par_M11){
   
   -logL
 }
-  
+
 model_M11 = cmpfun(model_M11, options=list(optimize=3))
 
 ##########################################################
@@ -2457,7 +2458,7 @@ prior_M11 = function( par_M11 ){
   sig_n      <- par_M11[2]
   sig_mu     <- par_M11[3]
   VE         <- par_M11[4]
-
+  
   ######################################
   ## Gamma prior on n
   
@@ -2488,7 +2489,7 @@ prior_M11 = function( par_M11 ){
   }else{
     prior_sig_mu = -LARGE
   }
- 
+  
   
   ######################################
   ##  Gamma prior on VE 
@@ -2499,7 +2500,7 @@ prior_M11 = function( par_M11 ){
   }else{
     prior_VE = -LARGE
   }
-   
+  
   prior = prior_n + prior_sig_n  + prior_sig_mu + prior_VE
   
   prior
@@ -2627,5 +2628,3 @@ quantile( MCMC_burn_M11[,3], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 quantile( MCMC_burn_M11[,4], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 
 save.image("MCMC_working_data.RData")
-
-
