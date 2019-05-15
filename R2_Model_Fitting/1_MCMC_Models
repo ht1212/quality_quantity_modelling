@@ -33,14 +33,12 @@
 ## model_m9 : 	      ,	av-Expon  
 ## model_m10:	      ,	av-Hill 
 ## model_m11: base model - no antibody dose-response curves. 
-##
+
 ## Each model is run with a Robbin-Munro algorithm for adaptive tuning of the proposal distribution 
-## 
+
 ## Many thanks to Michael White, Institut Pasteur, for guidence and developmental help in designing the MCMC algorithm 
 ## that was adapted and used here. 
-##
 
-set.seed(123)
 
 ##########################################################
 ##########################################################
@@ -54,6 +52,8 @@ set.seed(123)
 ##########################################################
 ##########################################################
 
+
+set.seed(123) 
 
 ##########################################################
 ##  model_M2 : ab-Expon, av:Expon 
