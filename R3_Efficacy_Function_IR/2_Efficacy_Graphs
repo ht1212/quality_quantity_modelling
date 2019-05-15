@@ -1,11 +1,19 @@
-####################################################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. The model code used here was kindly developed from Michael White's
+## previous work on this. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
+
 ## Code to generate the results from the section: Model Predicted Vaccine Efficacy as a Function of the Antibody Response  
 ## Section 1: Recreates Table.3 and the Efficacy Distributions 
 ## Section 2: Recreates Figure.5 - heatmap of predicted VE  
 ## Section 3: Recreates Figure.6 - VE dose-response 
-####################################################################################################################################
 
-### make objects for each parameter ###
+### make objects for each parameter if not in enviroment already ###
 
 par_median = apply(X=MCMC_burn_M5[,1:7], MARGIN=2, FUN=median)
 n <- as.numeric(par_median[1])
@@ -19,16 +27,8 @@ LogL <- as.numeric(par_median[7])
 p <- (sig_n^2-n)/(sig_n^2)
 r <- (n^2)/(sig_n^2-n)
 
-####################################################################################################################################
-####################################################################################################################################
-####################################################################################################################################
-####################################################################################################################################
-
-######################
-##     SECTION 2    ##
-##########################################
-### Vaccine Efficacy Heatmap - Figure.5 ##
-##########################################
+## SECTION 2    
+## Vaccine Efficacy Heatmap - Figure.5 
 
 ## sample iteration number  
 NN <- 2000 
@@ -140,16 +140,8 @@ text(y=2+av_70[1], x=1500, labels="70%")
 text(y=2+av_80[1], x=1500, labels="90%") 
  
 
-
-####################################################################################################################################
-####################################################################################################################################
-####################################################################################################################################
-####################################################################################################################################
-
-##########################################################################
 ## SECTION 3 
 ## VE dose response graphs for each immune measurement  
-###########################################################################
 
 ### extract posterior medians and calculate VE for each increasing immune measurement with the other antibody characteristic held constant (have chosen the median value here, can also set at an arbitary value) ###
 
