@@ -20,7 +20,12 @@ The R code presented is grouped according to the results subsections of the pape
 4. [Model Predicted Vaccine Efficacy as a Function of the Immune Response](R3_Efficacy_Function_IR)
 
 ## System Requirements  
-Perfomring this analysis requires only a standard computer with enough RAM to support running the code through R. This code has only been tested on Windows systems. 
+Perfomring this analysis requires only a standard computer with enough RAM to support running the code through R. This code has only been tested on a Windows system with the specifications as below: 
+
+Processor: Intel(R) Core(TM) i7-7560U CPU @ 2.40GHz 
+Intalled RAM: 16.0GB
+System Type: 64-bit operating system x4 based processor
+Windows specifications: Windows 10 Pro, Version 1803
 
 ### Software Requirements  
 Users should have R version 3.4.0 or higher, and several packages set up from CRAN.
