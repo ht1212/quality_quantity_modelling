@@ -37,7 +37,7 @@ To perform this analysis, first load the required packages into your R console u
 
 To replicate and reproduce the analyses presented in this paper, do the following:
 
-Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_pocessing.txt) to load into your environment. 
+Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_pocessing) to load into your environment. 
 Download the R code and follow through the sections for the particular part of the analysis you are trying to reproduce.
 From an R session, import Submicroscopic_Review_Data_R_Import.csv as the object Submicroscopic_Review_Data_R_Import.
 Run the R code. The output from running this code will be a number of MCMC objects, as well as a series of plots representing the output from MCMC based fitting of the logit-linear model to the collated data. These plots form the basis of the figures presented in the publication.
