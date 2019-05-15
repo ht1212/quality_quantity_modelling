@@ -1,3 +1,12 @@
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. 
+
+## The code below loads the data into your console and creates objects for the analysis section. 
+
 #######################################################################
 # Code to load data into R and create necessary objects for analysis  #
 #######################################################################
@@ -53,6 +62,7 @@ library(RColorBrewer)
 library(compiler)
 library(wesanderson) 
 library(survminer)
+library(survival)
 library(numDeriv)
 library(MASS)
 library(binom) 
