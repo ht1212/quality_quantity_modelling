@@ -10,7 +10,7 @@ This repository contains code used to generate the results and figures for the s
 
 *Hayley A Thompson1*, *Alexandra B Hogan1, Patrick G T Walker1, Michael T White2, Aubrey J Cunnington3 Christian F Ockenhouse4, Azra C Ghani1* 
 
-1 MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial College London, London, UK. 2 Malaria: Parasites and Hosts, Department of Parasites and Insect Vectors, Institut Pasteur, Paris, France. 3.  Section of Paediatrics, Imperial College London, London, UK. 4 PATH Malaria Vaccine Initiative, Washington, DC USA. 
+1 MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial College London, London, UK. 2 Malaria: Parasites and Hosts, Department of Parasites and Insect Vectors, Institut Pasteur, Paris, France. 3 Section of Paediatrics, Imperial College London, London, UK. 4 PATH Malaria Vaccine Initiative, Washington, DC USA. 
 
 ## Repo Contents 
 The R code presented is grouped according to the results subsections of the paper. 
@@ -38,4 +38,4 @@ To replicate and reproduce the analyses presented in this paper, do the followin
 
 Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_processing) to load into your environment. 
 
-Then follow through the [remaning sections]( )  in the repo folders to reporoduce the results as they appear in order in the Results section of the paper. The output of running the code will be a number of MCMC objects, as well as a series of plots represeting the output from both running the models and using the model parameter distributions to produce predictive results. These plots form the basis of the plots presented in the paper. 
+Then follow through the remaning sections in the repo folders to reporoduce the results as they appear in order in the Results section of the paper. The output of running the code will be a number of MCMC objects, as well as a series of plots represeting the output from both running the models and using the model parameter distributions to produce predictive results. These plots form the basis of the plots presented in the paper. 
