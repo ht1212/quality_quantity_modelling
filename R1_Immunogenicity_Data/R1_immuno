@@ -1,9 +1,15 @@
-#############################################################################################################
-# Code to Reproduce the Results from the section: Immunogenicity Data 
-# Within this section we re-summarise the immunological data we have been provided, produce display plots
-# and the associated statistical tests
-# Need to have loaded the data and installed the packages in 1.Data 
-#############################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. 
+
+## The code below reproduces the results from the section: Immunogenicity Data  
+## Within this section we re-summarise the immunological data, produce display plots and associated statistical tests. 
+## Ensure the data is loaded and all packages have been installed before continuing. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
 
 ### Immune measurements boxplots  - Paper Figure.1 
 
