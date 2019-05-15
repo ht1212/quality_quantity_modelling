@@ -116,3 +116,8 @@ spz_fit[,11] <- spz_fit[,10] - min(spz_fit[,10])
 ### order table based on difference in DIC ### 
 spz_fit <- spz_fit[order(spz_fit[,11]),]
 
+
+#### Hill Hill and Hill Exp model fits can come out with highly similar DIC and a comparison of VE dose-response curves 
+#### can be seen in the supplementary material. We found these curves to show highly similar relationships with slightly differing 
+#### avidity curves. A reasonable judgement can be made here on what dose-response curves to take forward if DIC don't allow for a 
+#### sensitive selection. 
