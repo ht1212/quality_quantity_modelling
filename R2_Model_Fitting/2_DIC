@@ -1,8 +1,23 @@
-##################################################################################################################################
-## Code contained in this file calculate the Deviance Inofrmation Criterion for all of the fitted sporozoite infection models.   #
-## DIC is the Deviance Information Criterion used for model selection.                                                           #
-## Note that the deviance is -2*log(likelihood)                                                                                  # 
-##################################################################################################################################
+## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
+
+## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
+## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
+## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
+## against malaria infection via mosquito challenge. 
+
+## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
+
+##  Model Fitting. 
+
+## The model selected following fitting was Model_M5 whereby antibody titre dose relationship was modelled using a Hill function and avidty 
+## an exponential dose response curve. During fitting we tested multiple runs of the models, often an **ab-Hill av-Expon** or 
+## ab-Hill av-Hill would have a difference in DIC of <5 which suggests difficulties in model selction in these instances we plotted the 
+## efficacy predictions from the model and found marginal differences in the overall outputs and therefore took forward the model 
+## with the lower number of parameters: ab-Hill av-Expon  
+
+## Code contained in this file calculate the Deviance Inofrmation Criterion for all of the fitted sporozoite infection models.   
+## DIC is the Deviance Information Criterion used for model selection.                                                           
+## Note that the deviance is -2*log(likelihood)                                                                                   
 
 ######################################
 ## Mean of the posterior
