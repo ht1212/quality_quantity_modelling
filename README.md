@@ -1,6 +1,5 @@
 # Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination 
 
-
 ## Overview 
 
 Characterising the immune response after vaccination enables us to try and identify correlates or surrogates of vaccine induced protection. These correlates can facilitate downstream vaccine selection, help to identify ways to increase the immunogencity of vaccines and aid in licensure decision making. Vaccine induced correaltes of protection are often identified following large scale trials or routine implementation whose numbers can power statistical association tests. However during early clinical trials of malaria vaccine candidates human challenge studies are used and the sample sizes are relatively small which can often make statistical tests difficult. Despite the small sample sizes these trials offer an opportunity to characterise immune response in malaria naive individuals with timed vaccine and infection exposure. In this work we use a Baysian method to fit a biologically motivated mathematical model of individal level malaria infection to characterise the relationships between antibody titre and antibody avidty and protection from infection following vaccination in order to test the utility of both these measures in being able to predict vaccine efficay. 
@@ -38,6 +37,5 @@ To perform this analysis, first load the required packages into your R console u
 To replicate and reproduce the analyses presented in this paper, do the following:
 
 Download MAL71_data.csv from the [Data](Data) folder of this repository, and use the [R code in the folder](Data/data_processing) to load into your environment. 
-Download the R code and follow through the sections for the particular part of the analysis you are trying to reproduce.
-From an R session, import Submicroscopic_Review_Data_R_Import.csv as the object Submicroscopic_Review_Data_R_Import.
-Run the R code. The output from running this code will be a number of MCMC objects, as well as a series of plots representing the output from MCMC based fitting of the logit-linear model to the collated data. These plots form the basis of the figures presented in the publication.
+
+Then follow through the [remaning sections]( )  in the repo folders to reporoduce the results as they appear in order in the Results section of the paper. The output of running the code will be a number of MCMC objects, as well as a series of plots represeting the output from both running the models and using the model parameter distributions to produce predictive results. These plots form the basis of the plots presented in the paper. 
