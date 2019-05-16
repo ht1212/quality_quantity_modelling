@@ -1,14 +1,5 @@
 # Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination 
 
-## Contents  
-1. [Overview](Overview)
-2. [Repo Content](Repo Content)
-3. [System Requirements](System Requirements) 
-4. [Software Requirements](Software Requirements) 
-5. [Installation Guide and Instructions for Use](Installation Guide and Instructions for Use)
-
-
-
 ## Overview 
 
 Characterising the immune response after vaccination enables us to try and identify correlates or surrogates of vaccine induced protection. These correlates can facilitate downstream vaccine selection, help to identify ways to increase the immunogencity of vaccines and aid in licensure decision making. Vaccine induced correaltes of protection are often identified following large scale trials or routine implementation whose numbers can power statistical association tests. However during early clinical trials of malaria vaccine candidates human challenge studies are used and the sample sizes are relatively small which can often make statistical tests difficult. Despite the small sample sizes these trials offer an opportunity to characterise immune response in malaria naive individuals with timed vaccine and infection exposure. In this work we use a Baysian method to fit a biologically motivated mathematical model of individal level malaria infection to characterise the relationships between antibody titre and antibody avidty and protection from infection following vaccination in order to test the utility of both these measures in being able to predict vaccine efficay. 
