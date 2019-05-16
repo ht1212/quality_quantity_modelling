@@ -26,12 +26,12 @@ T       <-  MAL71_time_to_onset
 nanp_std      <- nanp[which(vaccine=="std")]
 avidity_std   <- avidty[which(vaccine=="std")]
 infect_std    <- infect[which(vaccine=="std")]
-time_std      <- time[which(vaccine=="std")]
+time_std      <- T[which(vaccine=="std")]
 
 nanp_fx     <- nanp[which(vaccine=="fx")]
 avidity_fx  <- avidity[which(vaccine=="fx")]
 infect_fx   <- infect[which(vaccine=="fx")]
-time_fx     <- time[which(vaccine=="fx")]
+time_fx     <- T[which(vaccine=="fx")]
 
 ############################################ 
 ## Fixed Values to load into environment  ##
