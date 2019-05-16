@@ -137,7 +137,7 @@ points(x=nanp_seq, y=av_90, type='l', lwd=2)
 text(y=3+av_30[1], x=1500, labels="30%")
 text(y=3+av_50[1], x=1500, labels="50%") 
 text(y=2+av_70[1], x=1500, labels="70%")
-text(y=2+av_80[1], x=1500, labels="90%") 
+text(y=2+av_90[1], x=1500, labels="90%") 
  
 
 ## SECTION 3 
