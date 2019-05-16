@@ -21,7 +21,7 @@ nanp    <-  MAL71$nanp_titre
 avidity <-  MAL71$nanp_avidity * 100 
 vaccine <-  as.character(MAL71$vaccine)
 infect  <-  MAL71$infect
-T       <-  MAL71_time_to_onset
+T       <-  MAL71$time_to_onset
 
 nanp_std      <- nanp[which(vaccine=="std")]
 avidity_std   <- avidity[which(vaccine=="std")]
