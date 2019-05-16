@@ -43,6 +43,7 @@ r <- (n^2)/(sig_n^2-n)
 
 status <- infect  
 time <- T  
+trt <- rep(NA,46)
 trt[vaccine=="fx"] <- 1
 trt[vaccine=="std"]<- 0 
 
