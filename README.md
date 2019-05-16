@@ -47,5 +47,5 @@ Download MAL71_data.csv from the [Data](Data) folder of this repository, and use
 
 Then follow through the remaning sections in the repo folders to reporoduce the results as they appear in order in the Results section of the paper. The output of running the code will be a number of MCMC objects, as well as a series of plots represeting the output from both running the models and using the model parameter distributions to produce predictive results. These plots form the basis of the plots presented in the paper. 
 
-Note: The MCMC Code runs may take some 30 minutes to an hour depedning on computer performance. 
+Note: The MCMC Code runs around an hour to complete all models depedning on computer performance. 
 
