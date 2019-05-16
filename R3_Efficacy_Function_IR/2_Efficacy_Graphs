@@ -38,8 +38,8 @@ nanp_seq <- exp(seq(from=log(1000), to=log(2.0*max(nanp)), length=NN))
 av_seq <- exp(seq(from=log(0.8), to=log(100), length=NN))
 
 ## Vaccine Efficacy Function ###
-VE <- function(nanp, av){
-  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )*exp(-log(2)*av/b_av)
+VE <- function(nanp, avidity){
+  DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )*exp(-log(2)*avidity/b_av)
   VE_inf <- (r/(n*DR+r))^r
   VE_inf <- 1 - (1-VE_inf)/(1-(1-p)^r)
   
