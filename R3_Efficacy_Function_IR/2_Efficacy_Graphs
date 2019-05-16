@@ -53,9 +53,6 @@ for(i in 1:nrow(VE_mat)){
   VE_mat[NN-i+1,] <- VE(nanp_seq, av_seq[NN-i+1])
 }	
 
-### plotting parameters  ###
-# clear any plotting params 
-dev.off()
 
 Ncol = 10000
 pp <- 0.5
