@@ -10,7 +10,7 @@
 #######################################################################
 # Code to load data into R and create necessary objects for analysis  #
 #######################################################################
-
+sedwd(     ) # copy file path name in " " into brackets, ensure the working directory is the same filepath as where the data has been downloaded
 MAL71 <- read.csv("MAL71_data.csv") 
 
 ############################################
