@@ -130,6 +130,8 @@ spz_fit[10,10]           <-     DIC_M11
 spz_fit[,11] <- spz_fit[,10] - min(spz_fit[,10])
 
 ### order table based on difference in DIC ### 
+### best fitting model should be at the top of the table with 0.000 as DIC difference ### 
+### This table shows all model comparisons as per Supplementary info Table.1
 spz_fit <- spz_fit[order(spz_fit[,11]),]
 
 save.image(" .RData") # inset appropriate name 
