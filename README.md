@@ -1,11 +1,11 @@
 # Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination 
 
 ## Contents  
-1. [Overview] (Overview)
-2. [Repo Content] (Repo Content)
-3. [System Requirements] (System Requirements) 
-4. [Software Requirements] (Software Requirements) 
-5. [Installation Guide and Instructions for Use] (Installation Guide and Instructions for Use)
+1. [Overview](Overview)
+2. [Repo Content](Repo Content)
+3. [System Requirements](System Requirements) 
+4. [Software Requirements](Software Requirements) 
+5. [Installation Guide and Instructions for Use](Installation Guide and Instructions for Use)
 
 
 
