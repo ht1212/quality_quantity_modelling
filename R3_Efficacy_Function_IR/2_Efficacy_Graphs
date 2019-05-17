@@ -192,7 +192,7 @@ median_av <- median(avidity)
 M5_par_median_pred = sapply(nanp_seq, model_VE, avidity=median_av, par=par_median)
 
 ### posterior prediction intervals ###
-N_sam = 100000
+N_sam = 10000
 sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
 
 M2_sam_cs = matrix(NA, nrow=N_sam, ncol=length(nanp_seq))
