@@ -1,27 +1,15 @@
-## Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination
-
-## This paper represents further use of the White et al Sporozoite Infection Model first published in 2013 
-## (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395). In it we use the model to 
-## characterise assocations between antibody number and antibody quality in RTS,S/AS01 vaccine induced protection
-## against malaria infection via mosquito challenge. The model code used here was kindly developed from Michael White's
-## previous work on this. 
-
-## Any questions, errors I've missed or general comments please get in touch: h.thompson12@imperial.ac.uk
-
+#####################################################################################################################################################
 ## MCMC Model Comparisons for results section Model Fitting. 
 ## 
-## In this repo folder there is multiple fitting procedures for the models tested in the paper. Follow the code laid out here 
+## In this repo folder there is multiple mcmc model fitting procedures for the models tested in the paper. Follow the code laid out here 
 ## and ensure you save the RData panel to save the MCMC outputs for futther processing the in follow code folders. 
 ## 
-## Code contained here runs MCMC model fitting for 10 seperate sporozoite infection models 
+## Code contained here runs MCMC model fitting for 10 seperate sporozoite infection model 
 ## using different combinations of immune markers and dose-response curves 
 ##
 ## The model selected following fitting was Model_M5 whereby antibody titre dose relationship was modelled using a Hill function and avidty 
-## an exponential dose response curve. During fitting we tested multiple runs of the models, often an **ab-Hill av-Expon** or 
-## ab-Hill av-Hill would have a difference in DIC of <5 which suggests difficulties in model selction in these instances we plotted the 
-## efficacy predictions from the model and found marginal differences in the overall outputs and therefore took forward the model 
-## with the lower number of parameters: ab-Hill av-Expon  
-
+## an exponential dose response curve
+##
 ## List of model names and their descriptions: ab = titre, av = avidity, Expon = Exponential dose-response curve, Hill = Hill fucntion dose-response
 ## model_M2 : ab-Expon, av:Expon 
 ## model_M3 : ab-Expon, av-Hill 
@@ -33,12 +21,15 @@
 ## model_m9 : 	      ,	av-Expon  
 ## model_m10:	      ,	av-Hill 
 ## model_m11: base model - no antibody dose-response curves. 
-
+##
 ## Each model is run with a Robbin-Munro algorithm for adaptive tuning of the proposal distribution 
-
+## 
 ## Many thanks to Michael White, Institut Pasteur, for guidence and developmental help in designing the MCMC algorithm 
 ## that was adapted and used here. 
+##
+##################################################################################################################################################### 
 
+set.seed(123)
 
 ##########################################################
 ##########################################################
@@ -52,8 +43,6 @@
 ##########################################################
 ##########################################################
 
-
-set.seed(123) 
 
 ##########################################################
 ##  model_M2 : ab-Expon, av:Expon 
@@ -134,7 +123,7 @@ prior_M2 = function( par_M2 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -165,7 +154,7 @@ prior_M2 = function( par_M2 ){
   
   if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -173,9 +162,9 @@ prior_M2 = function( par_M2 ){
   ######################################
   ##  Gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -393,7 +382,7 @@ prior_M3 = function( par_M3 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -422,9 +411,9 @@ prior_M3 = function( par_M3 ){
   ######################################
   ## Gamma prior on b_nanp 
   
-  if( b_nanp>10 && b_nanp<50000 )
+  if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -432,9 +421,9 @@ prior_M3 = function( par_M3 ){
   ######################################
   ##  Gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -497,7 +486,7 @@ colnames(MCMC_par_M3) = c("n", "sig_n", "sig_mu","b_nanp", "b_av", "a_av", "logl
 
 par_MC3 = c(150, 194, 67200, 15000, 10 , 1 )       ## (n, sig_n, sig_mu, b_nanp, b_av, a_av)
 
-Sigma_MC3 = diag( (0.25*par_MC3)^2 )               ## Initial guess of covariance of MVN proposal dist
+Sigma_MC3 = diag( (0.45*par_MC3)^2 )               ## Initial guess of covariance of MVN proposal dist
 
 prior_MC3   = prior_M3( par_MC3 )                 
 
@@ -661,7 +650,7 @@ prior_M4 = function( par_M4 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -690,9 +679,9 @@ prior_M4 = function( par_M4 ){
   ######################################
   ## Gamma prior on b_nanp 
   
-  if( b_nanp>10 && b_nanp<50000 )
+  if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -710,9 +699,9 @@ prior_M4 = function( par_M4 ){
   ######################################
   ##  Gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -743,7 +732,7 @@ N_tune_start = 500        ## Start of adaptive tuning of covariance matrix of MV
 N_tune_end   = 5000       ## End of adaptive tuning of covariance matrix of MVN proposals
 N_adapt      = 6000       ## End of adaptive scaling of proposal size with rm_scale 
 
-step_scale  = 1           ## Scaler for step size
+step_scale  = 3           ## Scaler for step size
 MCMC_accept = 0           ## Track the MCMC acceptance rate
 
 
@@ -776,7 +765,7 @@ colnames(MCMC_par_M4) = c("n", "sig_n", "sig_mu","b_nanp", "a_nanp", "b_av", "a_
 
 par_MC4 = c(150, 194, 67200, 15000, 1, 10 , 1 )       ## (n, sig_n, sig_mu, b_nanp, a_nanp, b_av, a_av)
 
-Sigma_MC4 = diag( (0.25*par_MC4)^2 )                  ## Initial guess of covariance of MVN proposal dist
+Sigma_MC4 = diag( (0.6*par_MC4)^2 )                  ## Initial guess of covariance of MVN proposal dist
 
 prior_MC4   = prior_M4( par_MC4 )                 
 
@@ -949,7 +938,7 @@ prior_M5 = function( par_M5 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -980,7 +969,7 @@ prior_M5 = function( par_M5 ){
   
   if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -988,9 +977,9 @@ prior_M5 = function( par_M5 ){
   ######################################
   ##  Uniform prior on a_nanp ~ U(0,20)
   
-  if( a_nanp>0 && a_nanp<20 )
+  if( a_nanp>0 && a_nanp<30 )
   {
-    prior_a_nanp = log(1/20)
+    prior_a_nanp = log(1/30)
   }else{
     prior_a_nanp = -LARGE
   }
@@ -998,9 +987,9 @@ prior_M5 = function( par_M5 ){
   ######################################
   ##  GAmma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -1218,7 +1207,7 @@ prior_M6 = function( par_M6 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -1247,9 +1236,9 @@ prior_M6 = function( par_M6 ){
   ######################################
   ## Gamma prior on b_nanp 
   
-  if( b_nanp>1000 && b_nanp<70000 )
+  if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.7, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -1258,19 +1247,19 @@ prior_M6 = function( par_M6 ){
   ######################################
   ## Gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
   
   ######################################
-  ## Unifrom prior on gamma ~ U(-1,100)
+  ## Unifrom prior on gamma ~ U(-1,30)
   
-  if( gamma>-1 && gamma<100 )
+  if( gamma>-1 && gamma<30 )
   {
-    prior_gamma = log(1/100)
+    prior_gamma = log(1/30)
   }else{
     prior_gamma = -LARGE
   }
@@ -1290,7 +1279,7 @@ N_tune_start = 500        ## Start of adaptive tuning of covariance matrix of MV
 N_tune_end   = 5000       ## End of adaptive tuning of covariance matrix of MVN proposals
 N_adapt      = 6000       ## End of adaptive scaling of proposal size with rm_scale 
 
-step_scale  = 1           ## Scaler for step size
+step_scale  = 3           ## Scaler for step size
 MCMC_accept = 0           ## Track the MCMC acceptance rate
 
 #################################################
@@ -1320,9 +1309,9 @@ colnames(MCMC_par_M6) = c("n", "sig_n", "sig_mu","b_nanp", "b_av", "gamma", "log
 #########################################################
 ## Implement MCMC iterations
 
-par_MC6 = c(150, 194, 67200, 15000,  10 , -1  )       ## (n, sig_n, sig_mu, b_nanp, b_av, gamma)
+par_MC6 = c(150, 194, 67200, 15000,  10 , 10  )       ## (n, sig_n, sig_mu, b_nanp, b_av, gamma)
 
-Sigma_MC6 = diag( (0.5*par_MC6)^2 )      ## Initial guess of covariance of MVN proposal dist
+Sigma_MC6 = diag( (0.8*par_MC6)^2 )      ## Initial guess of covariance of MVN proposal dist
 
 prior_MC6   = prior_M6( par_MC6 )                 
 
@@ -1483,7 +1472,7 @@ prior_M7 = function( par_M7 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -1512,9 +1501,9 @@ prior_M7 = function( par_M7 ){
   ######################################
   ## Gamma prior on b_nanp 
   
-  if( b_nanp>10 && b_nanp<50000 )
+  if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -1729,7 +1718,7 @@ prior_M8 = function( par_M8 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -1760,7 +1749,7 @@ prior_M8 = function( par_M8 ){
   
   if( b_nanp>1000 && b_nanp<50000 )
   {
-    prior_b_nanp = log(dgamma(b_nanp, shape=0.5, rate=0.00005))
+    prior_b_nanp = log(dgamma(b_nanp, shape=5, rate=0.0005))
   }else{
     prior_b_nanp = -LARGE
   }
@@ -1792,6 +1781,9 @@ N_adapt      = 6000       ## End of adaptive scaling of proposal size with rm_sc
 
 step_scale  = 1           ## Scaler for step size
 MCMC_accept = 0           ## Track the MCMC acceptance rate
+
+#################################################
+## Robbins-munro step scaler
 
 #################################################
 ## Robbins-munro step scaler
@@ -1903,7 +1895,6 @@ quantile( MCMC_burn_M8[,3], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 quantile( MCMC_burn_M8[,4], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 quantile( MCMC_burn_M8[,5], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 
-
 ##################################################################################################################################
 ##################################################################################################################################
 ##################################################################################################################################
@@ -1981,7 +1972,7 @@ prior_M9 = function( par_M9 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -2011,9 +2002,9 @@ prior_M9 = function( par_M9 ){
   ######################################
   ##  gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -2223,7 +2214,7 @@ prior_M10 = function( par_M10 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -2252,9 +2243,9 @@ prior_M10 = function( par_M10 ){
   ######################################
   ##  gamma prior on b_av 
   
-  if( b_av>0 && b_av<20 )
+  if( b_av>1 && b_av<40 )
   {
-    prior_b_av = log(dgamma(b_av, shape=0.5, rate=0.05))
+    prior_b_av = log(dgamma(b_av, shape=6, rate=0.5))
   }else{
     prior_b_av = -LARGE
   }
@@ -2318,7 +2309,7 @@ colnames(MCMC_par_M10) = c("n", "sig_n", "sig_mu", "b_av", "a_av", "loglike", "p
 
 par_MC10 = c(150, 194, 67200, 10 , 1 )       ## (n, sig_n, sig_mu, )
 
-Sigma_MC10 = diag( (0.25*par_MC10)^2 )       ## Initial guess of covariance of MVN proposal dist
+Sigma_MC10 = diag( (0.8*par_MC10)^2 )       ## Initial guess of covariance of MVN proposal dist
 
 prior_MC10   = prior_M10( par_MC10 )                 
 
@@ -2475,7 +2466,7 @@ prior_M11 = function( par_M11 ){
   
   if( n>0 && n<500 )
   {
-    prior_n = log(dgamma(n, shape=0.75, rate=0.005))
+    prior_n = log(dgamma(n, shape=7.5, rate=0.05))
   }else{
     prior_n = -LARGE
   }
@@ -2639,3 +2630,5 @@ quantile( MCMC_burn_M11[,3], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 quantile( MCMC_burn_M11[,4], probs=c(0.025, 0.5, 0.975), na.rm=TRUE )
 
 save.image("MCMC_working_data.RData")
+
+
