@@ -61,18 +61,24 @@ model_VE <- function(nanp, avidity, par_M5){
   
 }
 
+#Efficacy function 
 model_VE = cmpfun(model_VE, options=list(optimize=3))
 
+#number of iterations to sample from 
 N_sam = 20000
 
+#selection of 20,000 mcmc parameter draws to pull from the distribution
 sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
 
+# matrix to store eff calculations 
 M2_sam_test = matrix(NA, nrow=N_sam, ncol=length(avidity))
 
+# calculate VE for each participant in the trial across multiple parameter draws from the postierior
 for(k in 1:N_sam){
   M2_sam_test[k,] = sapply(avidity, model_VE, nanp=nanp, par=MCMC_burn_M5[sam_seq[k],1:6])
 }
 
+# matrix to store each individuals median and 95% CrI limits of Vacicne Efficacy 
 M2_quant_test = matrix(NA, nrow=3, ncol=length(avidity))
 
 for(j in 1:length(avidity)){
@@ -186,23 +192,29 @@ VE_obs[4,4]  <- 1 - sum(infect)/length(infect)
 
 ######################################
 #### C_11 avidity low titre low
+
+#number of iterations to sample from 
 N_sam = 20000
 
+#selection of 20,000 mcmc parameter draws to pull from the distribution
 sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
 
+# matrix to store eff calculations
 M2_sam_ll = matrix(NA, nrow=N_sam, ncol=length(avidity[C_11]))
 
+# calculate VE for each participant in the trial across multiple parameter draws from the postierior
 for(k in 1:N_sam){
   M2_sam_ll[k,] = sapply(avidity[C_11], model_VE, nanp=nanp[C_11], par=MCMC_burn_M5[sam_seq[k],1:6])
 }
 
+# matrix to store each individuals median and 95% CrI limits of Vacicne Efficacy 
 M2_quant_ll = matrix(NA, nrow=3, ncol=length(avidity[C_11]))
-
 
 for(j in 1:length(avidity[C_11])){
   M2_quant_ll[,j] = quantile( M2_sam_ll[,j], prob=c(0.025, 0.5, 0.975) )
 }
 
+# 
 mean(M2_quant_ll[1,])
 mean(M2_quant_ll[2,])
 mean(M2_quant_ll[3,])
