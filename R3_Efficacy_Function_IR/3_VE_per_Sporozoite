@@ -11,8 +11,7 @@
 ## Code to recreate the results from the section: Vaccine Efficacy Per Sporozoite  
 ## Per parasite efficacy is estimating the proportional reduction in the number of parasites emerging from the liver
 
-### per parasite efficacy model 
-
+# parasite efficacy model 
 model_VE_par <- function(nanp, avidity, par_M5){
   n          <- par_M5[1]
   sig_n      <- par_M5[2]
@@ -27,7 +26,7 @@ model_VE_par <- function(nanp, avidity, par_M5){
   
   p = (sig_n^2-n)/(sig_n^2)
   r = (n^2)/(sig_n^2-n)
-
+  
   #############################
   ## Dose response
   
@@ -51,4 +50,15 @@ for(k in 1:N_sam){
   M2_sam_par[k,] = sapply(avidity, model_VE_par, nanp=nanp, par=MCMC_burn_M5[sam_seq[k],1:6])
 }
 
-quantile(M2_sam_par, probs = c(0.025, 0.5, 0.975))
+M2_quant_par = matrix(NA, nrow=3, ncol=length(avidity))
+
+for(j in 1:length(avidity)){
+  M2_quant_par[,j] = quantile( M2_sam_par[,j], prob=c(0.025, 0.5, 0.975) )
+}
+
+mean(M2_quant_par[1,])
+#value
+mean(M2_quant_par[2,])
+#upper CI
+mean(M2_quant_par[3,])
+
