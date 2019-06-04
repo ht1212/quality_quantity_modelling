@@ -16,7 +16,7 @@
 ################################
 ##        SECTION 1           ##
 ################################
-
+#### Here we use parameter draws to calculate average efficacy based on grouped terciles of immune measurement magnitudes.
 
 ### make objects for each parameter ###
 
@@ -32,7 +32,7 @@ LogL <- as.numeric(par_median[7])
 p <- (sig_n^2-n)/(sig_n^2)
 r <- (n^2)/(sig_n^2-n)
 
-### 1 VE against Infection across the whole study ###
+### 1 VE against Infection across everyone in the study ###
 
 ### VE calculation ###
 model_VE <- function(nanp, avidity, par_M5){
@@ -151,7 +151,7 @@ C_32 <- intersect( avidity_3, nanp_2 )
 # titre high 
 C_33 <- intersect( avidity_3, nanp_3 )
 
-### counts ###
+### counts people per group ###
 count[1,1] <- length(C_11)
 count[1,2] <- length(C_12)
 count[1,3] <- length(C_13)
@@ -221,6 +221,7 @@ mean(M2_quant_ll[3,])
 
 #####################################
 #### C_12 aidity low titre medium 
+
 M2_sam_12 = matrix(NA, nrow=N_sam, ncol=length(avidity[C_12]))
 
 for(k in 1:N_sam){
@@ -533,6 +534,8 @@ VE_pred[4,4]  <- mean(M2_quant_test[2,])
 ########################################
 ## Histograms of individual level VE  ##
 ########################################
+## Using best fitting model parameters 
+
 DR <- ( 1/(1+(nanp/b_nanp)^a_nanp) )* exp( -log(2)*(avidity/b_av) )
 
 VE_inf <- (r/(n*DR+r))^r
