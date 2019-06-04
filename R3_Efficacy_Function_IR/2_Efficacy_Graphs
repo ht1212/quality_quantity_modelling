@@ -27,7 +27,10 @@ LogL <- as.numeric(par_median[7])
 p <- (sig_n^2-n)/(sig_n^2)
 r <- (n^2)/(sig_n^2-n)
 
-## SECTION 2    
+###############
+## SECTION 2 ## 
+###############
+
 ## Vaccine Efficacy Heatmap - Figure.5 
 
 ## sample iteration number  
@@ -53,7 +56,7 @@ for(i in 1:nrow(VE_mat)){
   VE_mat[NN-i+1,] <- VE(nanp_seq, av_seq[NN-i+1])
 }	
 
-
+### colour gradient for efficacy 
 Ncol = 10000
 pp <- 0.5
 colours = colorRampPalette(brewer.pal(9,"YlOrRd"))(10000)
@@ -63,6 +66,7 @@ col.sample <- floor(col.sample^pp)
 
 colours <- colours[col.sample]
 
+### Plotting 
 image.plot(x=nanp_seq, y=av_seq, z=t(VE_mat), col=colours, log="x",
            xlab=expression(paste( " Anti-NANP Antibody Titre ")), ylab="Avidity Index",
            legend.lab="Vaccine Efficacy", xaxt='n',
@@ -98,7 +102,6 @@ points(x=c(0.001, 1000000), y=rep(av_high,2),
 ### data points ###
 infect_col <- rep("white", length(infect_fx))
 
-# infected fx 
 infect_col[which(infect_fx==1)] <- "greenyellow"
 
 infect_col2 <- rep("white", length(infect_std))
@@ -136,15 +139,17 @@ text(y=3+av_50[1], x=1500, labels="50%")
 text(y=2+av_70[1], x=1500, labels="70%")
 text(y=2+av_90[1], x=1500, labels="90%") 
  
+###############
+## SECTION 3 ##
+###############
 
-## SECTION 3 
 ## VE dose response graphs for each immune measurement  
 
-### extract posterior medians and calculate VE for each increasing immune measurement with the other antibody characteristic held constant (have chosen the median value here, can also set at an arbitary value) ###
+### extract posterior medians and calculate VE for each increasing immune measurement with the other antibody 
+### characteristic held constant (have chosen the median value here, can also set at an arbitary value) ###
 
 ###===========================================================================================================================
 ## 1 VE for each unit increase in anti-nanp antibody titre
-##
 
 ## best fitting median parameter values  
 par_median = apply(X=MCMC_burn_M5[,1:7], MARGIN=2, FUN=median)
@@ -191,7 +196,7 @@ median_av <- median(avidity)
 
 M5_par_median_pred = sapply(nanp_seq, model_VE, avidity=median_av, par=par_median)
 
-### posterior prediction intervals ###
+### posterior prediction intervals sampled across posterior draws to calculate CrIs ###
 N_sam = 10000
 sam_seq = round(seq(from=1, to=nrow(MCMC_burn_M5), length=N_sam))
 
@@ -200,7 +205,6 @@ M2_sam_cs = matrix(NA, nrow=N_sam, ncol=length(nanp_seq))
 for(k in 1:N_sam){
   M2_sam_cs[k,] = sapply(nanp_seq, model_VE, avidity=median_av, par=MCMC_burn_M5[sam_seq[k],1:6])
 }
-
 
 M2_quant_cs = matrix(NA, nrow=3, ncol=length(nanp_seq))
 
@@ -230,7 +234,6 @@ for(i in 1:length(nanp)){
 counts <- 0.9*counts/max(counts)
 
 ### plot ###
-### plots next to each other ### 
 
 par(mfrow=c(1,2))
 
