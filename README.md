@@ -6,12 +6,13 @@ Characterising the immune response after vaccination enables us to try and ident
 
 This repository contains code used to generate the results and figures for the submitted publication:
 
-
 **Modelling the Roles of Antibody Titre and Avidity in Protection from Malaria Infection Following RTS,S/AS01 Vaccination**
 
 *Hayley A Thompson1*, *Alexandra B Hogan1, Patrick G T Walker1, Michael T White2, Aubrey J Cunnington3 Christian F Ockenhouse4, Azra C Ghani1* 
 
 1 MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial College London, London, UK. 2 Malaria: Parasites and Hosts, Department of Parasites and Insect Vectors, Institut Pasteur, Paris, France. 3 Section of Paediatrics, Imperial College London, London, UK. 4 PATH Malaria Vaccine Initiative, Washington, DC USA. 
+
+Many thanks to Michael White, Institut Pasteur, who's original work (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061395) formed the basis of this study and for his help in designing the MCMC algorithm that was adapted and used here. 
 
 ## Repo Content 
 The R code presented is grouped according to the results subsections of the paper. 
