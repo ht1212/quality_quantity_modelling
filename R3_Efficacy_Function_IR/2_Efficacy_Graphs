@@ -292,7 +292,7 @@ model_VE <- function(nanp, avidity, par_M5){
   #############################
   ## Dose response
   
-  DR <-  exp( -log(2)*(avidity/b_av) ) #( 1/(1+(nanp/b_nanp)^a_nanp) )
+  DR <-  exp( -log(2)*(avidity/b_av) ) * ( 1/(1+(nanp/b_nanp)^a_nanp) )
   
   #############################
   ## VE against infection 
