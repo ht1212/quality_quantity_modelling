@@ -67,11 +67,11 @@ annotate_figure(figure_1,
 
 ### sharpiro-Wilk normality test for nanp 
 shapiro.test(bp$titre)
-# p.value 0.00903 = not significantly different from normal dist 
+# p.value 0.00903 = data significantly different from normal dist 
 
 ### sharpiro-wilk normality test for avidity 
 shapiro.test(bp$avidity)
-# p.value 0.4198 = data not normally distributed 
+# p.value 0.4198 = data normally distributed 
 
 #### visual inspection of normality  
 ggqqplot(nanp, ylab="anti-NANP titre")
